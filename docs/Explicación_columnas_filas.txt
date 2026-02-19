@@ -1,0 +1,3 @@
+Las letras (columnas) son el eje horizontal (arriba, de izquierda a derecha).
+Los números (filas) son el eje vertical (derecha, de arriba a abajo).
+El jugador introduce las coordenadas con el formato letra-número.
