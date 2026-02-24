@@ -7,10 +7,7 @@ public class Acorazado extends Barco {
 
     public Acorazado(String nombre, int tamano, int cargasHabilidad, IBlindaje blindaje) {
         super(nombre, tamano, cargasHabilidad, blindaje);
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
-    public Acorazado(int tamano,int cargasHabilidad, )
-
-   
 }

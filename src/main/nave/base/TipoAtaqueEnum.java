@@ -1,12 +1,5 @@
 package main.nave.base;
 
 public enum TipoAtaqueEnum {
-
-    /*
-     * NORMAL (1 casilla)
-     * RADAR (3x3, sin daño)
-     * CRUZ (Fila/Columna)
-     * ZONA (Cruz +)
-     */
-
+    R_AEREO, A_CRUZ, INMERSION, B_ZONA, D_DOBLE
 }

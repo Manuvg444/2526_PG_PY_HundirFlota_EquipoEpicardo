@@ -37,7 +37,7 @@ public class Barco {
 
     public TipoAtaqueEnum getAtaqueEspecial() {
 
-        return TipoAtaqueEnum;
+        return;
 
     }
 
