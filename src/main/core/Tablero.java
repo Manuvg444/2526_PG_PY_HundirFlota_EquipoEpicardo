@@ -1,5 +1,12 @@
 package main.core;
 
+import main.localizacion.Columna;
+import main.localizacion.Coordenada;
+import main.localizacion.DireccionEnum;
+import main.localizacion.Fila;
+import main.nave.base.Barco;
+import main.nave.base.TipoAtaqueEnum;
+
 /*
  * Esta clase gestiona la cuadrícula de juego y la lógica de combate sobre las casillas.
  */
@@ -11,9 +18,15 @@ public class Tablero implements IAtacable {
     /**
      * Constructor: Inicializa la matriz de casillas.
      */
-    public TableroAlumno() {
-        // // TODO: Instanciar la matriz 'celdas' con TAMAÑO x TAMAÑO.
-        // // TODO: Rellenar cada posición con un nuevo objeto Casilla().
+    public Tablero() {
+
+        celdas = new Casilla[TAMAÑO][TAMAÑO];
+
+        for (int col = 0; col < celdas.length; col++) {
+            for (int fila = 0; fila < celdas.length; fila++) {
+                celdas[col][fila] = new Casilla();
+            }
+        }
     }
 
     /**
@@ -23,6 +36,9 @@ public class Tablero implements IAtacable {
     public boolean colocarBarco(Barco b, Coordenada inicio, DireccionEnum d) {
         // // TODO:
         // // 1. Obtener tamaño del barco, fila y columna de inicio.
+        int tamano = b.getTamano();
+        Columna columna = inicio.getColumna();
+        Fila fila = inicio.getFila();
         // // 2. PRIMER BUCLE (Validación): Recorrer las posiciones que ocuparía el barco
         // //    según la dirección y comprobar:
         // //    a) ¿Está dentro del tablero? (usar esCoordenadaValida)
