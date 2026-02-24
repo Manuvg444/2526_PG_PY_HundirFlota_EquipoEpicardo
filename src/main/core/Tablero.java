@@ -1,8 +1,6 @@
 package main.core;
 
-/**
- * PLANTILLA PARA EL ALUMNO.
- * 
+/*
  * Esta clase gestiona la cuadrícula de juego y la lógica de combate sobre las casillas.
  */
 public class Tablero implements IAtacable {

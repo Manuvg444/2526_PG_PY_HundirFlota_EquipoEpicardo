@@ -2,8 +2,8 @@ package main.localizacion;
 
 public class Coordenada {
 
-    Fila fila;
-    Columna columna;
+    private Fila fila;
+    private Columna columna;
 
     public Coordenada(String entrada) {
     // 1. Extraer la letra (0) y el número (desde 1 hasta el final)
@@ -20,5 +20,17 @@ public class Coordenada {
     // 4. Instanciar componentes
     this.fila = new Fila(filaIndex);
     this.columna = new Columna(colIndex);
-}
+    }
+
+    public Coordenada (int numColumna, int numFila) {
+        this.columna = new Columna(numColumna);
+        this.fila=new Fila(numFila);
+    }
+
+    public Columna getColumna() {
+        return columna;
+    }
+    public Fila getFila() {
+        return fila;
+    }
 }

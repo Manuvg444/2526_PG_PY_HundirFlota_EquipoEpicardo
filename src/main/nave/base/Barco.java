@@ -20,7 +20,7 @@ public class Barco {
     }
 
     public int recibirImpacto() {
-
+    
     }
 
     public boolean estaHundido() {
