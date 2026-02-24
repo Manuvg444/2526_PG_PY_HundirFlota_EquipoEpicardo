@@ -39,14 +39,21 @@ public class Tablero implements IAtacable {
         int tamano = b.getTamano();
         Columna columna = inicio.getColumna();
         Fila fila = inicio.getFila();
+
         // // 2. PRIMER BUCLE (Validación): Recorrer las posiciones que ocuparía el barco
         // //    según la dirección y comprobar:
         // //    a) ¿Está dentro del tablero? (usar esCoordenadaValida)
         // //    b) ¿Hay ya otro barco en esa casilla?
         // //    c) ¿Hay barcos en las casillas adyacentes? (regla de no barcos pegados)
+        
+
         // // 3. Si alguna comprobación falla, retornar false inmediatamente.
+
+
         // // 4. SEGUNDO BUCLE (Colocación): Si todo es válido, volver a recorrer y
         // //    llamar a casilla.colocarBarco(b) en cada posición.
+
+
         // // 5. Retornar true.
         return false;
     }
