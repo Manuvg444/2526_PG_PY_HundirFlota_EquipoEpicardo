@@ -1,5 +1,13 @@
 package main.nave.tipos;
 
-public class Buque {
+import main.nave.base.Barco;
+import main.nave.base.IBlindaje;
+
+public class Buque extends Barco {
+
+    public Buque(String nombre, int tamano, int cargasHabilidad, IBlindaje blindaje) {
+        super(nombre, tamano, cargasHabilidad, blindaje);
+        // TODO Auto-generated constructor stub
+    }
 
 }
