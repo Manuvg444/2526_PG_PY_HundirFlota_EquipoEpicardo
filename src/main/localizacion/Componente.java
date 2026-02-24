@@ -1,5 +1,9 @@
 package main.localizacion;
 
-public class Componente {
-    
+public abstract class Componente {
+    protected int valor;
+
+    public int getValor() {
+        return valor;
+    }
 }
