@@ -7,15 +7,18 @@ public class Casilla {
     private Barco barco;
 
     public Casilla() {
-
+        estado = EstadoCasillaEnum.AGUA;
     }
 
     public boolean tieneBarco() {
-
+        if (barco!=null) {
+            return true;
+        }
+        return false;
     }
 
     public void colocarBarco (Barco barco) {
-
+        this.barco = barco;
     }
 
     public EstadoCasillaEnum recibirImpacto() {
