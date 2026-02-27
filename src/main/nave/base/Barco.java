@@ -19,8 +19,8 @@ public class Barco {
         this.blindaje = blindaje;
     }
 
-    public int recibirImpacto() {
-    
+    public int recibirImpacto(int danioEntrante) {
+        return danioEntrante;
     }
 
     public boolean estaHundido() {
