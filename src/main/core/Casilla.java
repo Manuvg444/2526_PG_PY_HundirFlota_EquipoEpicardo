@@ -18,7 +18,7 @@ public class Casilla {
     }
 
     public void colocarBarco (Barco barco) {
-
+        this.barco = barco;
     }
 
     public EstadoCasillaEnum recibirImpacto() {

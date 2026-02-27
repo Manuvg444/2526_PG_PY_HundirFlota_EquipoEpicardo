@@ -37,8 +37,8 @@ public class Tablero implements IAtacable {
         // // TODO:
         // // 1. Obtener tamaño del barco, fila y columna de inicio.
         int tamano = b.getTamano();
-        Columna columna = inicio.getColumna();
-        Fila fila = inicio.getFila();
+        int col = inicio.getColumna().getValor();
+        int fila = inicio.getFila().getValor();
 
         // // 2. PRIMER BUCLE (Validación): Recorrer las posiciones que ocuparía el barco
         // //    según la dirección y comprobar:
@@ -46,16 +46,70 @@ public class Tablero implements IAtacable {
         // //    b) ¿Hay ya otro barco en esa casilla?
         // //    c) ¿Hay barcos en las casillas adyacentes? (regla de no barcos pegados)
         
-
+        
+        switch (d) {
+            case NORTE:
+                for (int i = 0; i < tamano; i++) {
+                    if (esCoordenadaValida(col, fila-i)==false || celdas[col][fila-i].tieneBarco() || hayBarcoCerca(col, fila-i)) {
+                        return false;
+                    }
+                }
+                break;
+            case SUR:
+                for (int i = 0; i < tamano; i++) {
+                    if (esCoordenadaValida(col, fila+i)==false || celdas[col][fila+i].tieneBarco() || hayBarcoCerca(col, fila+i)) {
+                        return false;
+                    }
+                }
+                break;
+            case ESTE:
+                for (int i = 0; i < tamano; i++) {
+                    if (esCoordenadaValida(col+i, fila)==false || celdas[col+i][i].tieneBarco() || hayBarcoCerca(col+i, i)) {
+                        return false;
+                    }
+                }
+                break;
+            case OESTE:
+                for (int i = fila; i < tamano; i++) {
+                    if (esCoordenadaValida(col-i, fila)==false || celdas[col-i][i].tieneBarco() || hayBarcoCerca(col-i, i)) {
+                        return false;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
         // // 3. Si alguna comprobación falla, retornar false inmediatamente.
 
 
         // // 4. SEGUNDO BUCLE (Colocación): Si todo es válido, volver a recorrer y
         // //    llamar a casilla.colocarBarco(b) en cada posición.
-
-
+        switch (d) {
+            case NORTE:
+                for (int i = 0; i < tamano; i++) {
+                    celdas[col][fila-i].colocarBarco(b);
+                }
+                break;
+            case SUR:
+                for (int i = 0; i < tamano; i++) {
+                     celdas[col][fila+i].colocarBarco(b);
+                }
+                break;
+            case ESTE:
+                for (int i = 0; i < tamano; i++) {
+                    celdas[col+1][fila].colocarBarco(b);
+                }
+                break;
+            case OESTE:
+                for (int i = fila; i < tamano; i++) {
+                    celdas[col-1][fila].colocarBarco(b);
+                }
+                break;
+            default:
+                break;
+        }
         // // 5. Retornar true.
-        return false;
+        return true;
     }
 
     /**
@@ -98,17 +152,27 @@ public class Tablero implements IAtacable {
     /**
      * Comprueba si una fila y columna están dentro de los límites (0 a TAMAÑO-1).
      */
-    private boolean esCoordenadaValida(int f, int c) {
+    private boolean esCoordenadaValida(int c, int f) {
         // // TODO: Retornar true si f y c están entre 0 y TAMAÑO-1.
+        if (c>=0 && f>=0 && c<TAMAÑO && f<TAMAÑO) {
+            return true;
+        }
         return false;
     }
 
     /**
      * Verifica si hay algún barco en las 8 casillas que rodean a la posición dada.
      */
-    private boolean hayBarcoCerca(int f, int c) {
+    private boolean hayBarcoCerca(int c, int f) {
         // // TODO: Recorrer con dos bucles anidados de -1 a +1 para f y c.
         // // Comprobar si la coordenada vecina es válida y si tiene un barco.
+        for (int col = c-1; col <= c+1; col++) {
+            for (int fila = f-1; fila <= f+1; fila++) {
+                if (esCoordenadaValida(c, f) && celdas[c][f].tieneBarco()==false) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }

@@ -2,8 +2,8 @@ package main.localizacion;
 
 public class Columna extends Componente{
     
-    public Columna(String letra) {
-        
+    public Columna(char letra) {
+        this.valor = letra - 'A';
     }
 
     public Columna(int valor) {
