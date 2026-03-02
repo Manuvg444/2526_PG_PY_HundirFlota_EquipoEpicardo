@@ -3,7 +3,7 @@ package main.localizacion;
 public abstract class Componente {
     protected int valor;
 
-    public int getValor() {
+    public int getValue() {
         return valor;
     }
 }

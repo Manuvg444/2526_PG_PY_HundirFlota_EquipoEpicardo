@@ -22,7 +22,14 @@ public class Casilla {
     }
 
     public EstadoCasillaEnum recibirImpacto() {
-
+        if (tieneBarco()) {
+            if (barco.recibirImpacto()>=barco.getVidas()) {
+                return estado.HUNDIDO;
+            } else {
+                return estado.TOCADO;
+            }
+        }
+        return estado.AGUA;
     }
 
     public EstadoCasillaEnum consultarEstadoRadar() {

@@ -5,4 +5,9 @@ public class Fila extends Componente {
         this.valor = numero;
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(this.valor+1);
+    }
+
 }
