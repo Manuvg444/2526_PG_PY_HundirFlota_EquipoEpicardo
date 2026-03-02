@@ -2,12 +2,17 @@ package main.nave.tipos;
 
 import main.nave.base.Barco;
 import main.nave.base.IBlindaje;
+import main.nave.base.TipoAtaqueEnum;
 
 public class Acorazado extends Barco {
 
-    public Acorazado(String nombre, int tamano, int cargasHabilidad, IBlindaje blindaje) {
-        super(nombre, tamano, cargasHabilidad, blindaje);
-        // TODO Auto-generated constructor stub
+    public Acorazado(IBlindaje blindaje) {
+        super("Acorazado", 4, 1, blindaje);
+    }
+
+    @Override
+    public TipoAtaqueEnum getAtaqueEspecial() {
+        return TipoAtaqueEnum.B_ZONA;
     }
 
 }

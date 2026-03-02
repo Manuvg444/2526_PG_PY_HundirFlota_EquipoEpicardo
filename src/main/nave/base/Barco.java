@@ -17,40 +17,59 @@ public class Barco {
         this.tamano = tamano;
         this.cargasHabilidad = cargasHabilidad;
         this.blindaje = blindaje;
+        this.vidas = tamano;
     }
 
-    public int recibirImpacto(int danioEntrante) {
-        return danioEntrante;
+    public Barco(IBlindaje blindaje) {
+        this("SinNombre", 1, 0, blindaje);
+    }
+
+    public int recibirImpacto() {
+        int danioBase = 1;
+        int danioFinal = blindaje.recibirImpacto(danioBase);
+        this.vidas -= danioFinal;
+        return danioFinal;
+
     }
 
     public boolean estaHundido() {
-        return false;
+        if (this.vidas > 0)
+            return false;
+        else
+            return true;
+
     }
 
-    public void usarCarga() {
-
+    public int usarCarga() {
+        return this.cargasHabilidad - 1;
     }
 
     public boolean tieneCargas() {
-        return true;
+        if (this.cargasHabilidad > 0)
+            return true;
+        else
+            return false;
     }
 
     public TipoAtaqueEnum getAtaqueEspecial() {
-
-        return;
+        return TipoAtaqueEnum.DEFECTO;
 
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public int getTamano() {
-        return tamano;
+        return this.tamano;
     }
 
     public int getVidas() {
-        return vidas;
+        return this.vidas;
+    }
+
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
     }
 
 }

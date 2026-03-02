@@ -2,12 +2,19 @@ package main.nave.tipos;
 
 import main.nave.base.Barco;
 import main.nave.base.IBlindaje;
+import main.nave.base.TipoAtaqueEnum;
 
 public class Destructor extends Barco {
 
-    public Destructor(String nombre, int tamano, int cargasHabilidad, IBlindaje blindaje) {
-        super(nombre, tamano, cargasHabilidad, blindaje);
-        // TODO Auto-generated constructor stub
+    public Destructor(IBlindaje blindaje) {
+        super("Destructor", 2, 2, blindaje);
+
+    }
+
+    @Override
+    public TipoAtaqueEnum getAtaqueEspecial() {
+
+        return TipoAtaqueEnum.D_DOBLE;
     }
 
 }
