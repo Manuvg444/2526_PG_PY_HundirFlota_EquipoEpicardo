@@ -37,8 +37,8 @@ public class Tablero implements IAtacable {
         // // TODO:
         // // 1. Obtener tamaño del barco, fila y columna de inicio.
         int tamano = b.getTamano();
-        int col = inicio.getColumna().getValor();
-        int fila = inicio.getFila().getValor();
+        int col = inicio.getColumna();
+        int fila = inicio.getFila();
 
         // // 2. PRIMER BUCLE (Validación): Recorrer las posiciones que ocuparía el barco
         // //    según la dirección y comprobar:
@@ -124,6 +124,8 @@ public class Tablero implements IAtacable {
         // //    - NORMAL: Solo la coordenada 'c'.
         // //    - RADAR: Zona 3x3 alrededor de 'c'.
         // //    - CRUZ: Toda la fila y toda la columna de 'c'.
+
+        
         // // 2. Recorrer las coordenadas afectadas:
         // //    - Si la coordenada es válida:
         // //      a) Obtener la casilla correspondiente.
@@ -168,7 +170,7 @@ public class Tablero implements IAtacable {
         // // Comprobar si la coordenada vecina es válida y si tiene un barco.
         for (int col = c-1; col <= c+1; col++) {
             for (int fila = f-1; fila <= f+1; fila++) {
-                if (esCoordenadaValida(c, f) && celdas[c][f].tieneBarco()==false) {
+                if (esCoordenadaValida(c, f) && celdas[c][f].tieneBarco()) {
                     return true;
                 }
             }

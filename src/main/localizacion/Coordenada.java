@@ -27,10 +27,38 @@ public class Coordenada {
         this.fila=new Fila(numFila);
     }
 
-    public Columna getColumna() {
-        return columna;
+    public int getColumna() {
+        return columna.getValue();
     }
-    public Fila getFila() {
-        return fila;
+    public int getFila() {
+        return fila.getValue();
+    }
+
+    @Override
+    public String toString() {
+        return columna.toString() + "-" + fila.toString();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Coordenada other = (Coordenada) obj;
+        if (fila == null) {
+            if (other.fila != null)
+                return false;
+        } else if (fila.getValue()!=other.fila.getValue())
+            return false;
+        if (columna == null) {
+            if (other.columna != null)
+                return false;
+        } else if (columna.getValue()!=other.columna.getValue())
+            return false;
+        return true;
     }
 }
