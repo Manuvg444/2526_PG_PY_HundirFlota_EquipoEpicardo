@@ -1,6 +1,6 @@
 package main.nave.base;
 
-public class Barco {
+public abstract class Barco {
 
     // #region Propiedades
 
@@ -20,9 +20,11 @@ public class Barco {
         this.vidas = tamano;
     }
 
-    public Barco(IBlindaje blindaje) {
-        this("SinNombre", 1, 0, blindaje);
-    }
+    /*
+     * public Barco(IBlindaje blindaje) {
+     * this("SinNombre", 1, 0, blindaje);
+     * }
+     */
 
     public int recibirImpacto() {
         int danioBase = 1;
@@ -41,7 +43,11 @@ public class Barco {
     }
 
     public int usarCarga() {
-        return this.cargasHabilidad - 1;
+        if (this.cargasHabilidad > 0) {
+            return this.cargasHabilidad = this.cargasHabilidad - 1;
+        } else {
+            return this.cargasHabilidad = 0;
+        }
     }
 
     public boolean tieneCargas() {
