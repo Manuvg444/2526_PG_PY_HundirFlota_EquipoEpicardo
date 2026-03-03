@@ -7,8 +7,4 @@
         "lib/**/*.jar"
     ],
     "java.debug.settings.vmArgs": "-ea"
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f9b67c82165145c5d92049c6c8e0453d084f3c93
