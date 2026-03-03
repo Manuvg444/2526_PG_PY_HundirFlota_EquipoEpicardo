@@ -23,7 +23,8 @@ public class Casilla {
 
     public EstadoCasillaEnum recibirImpacto() {
         if (tieneBarco()) {
-            if (barco.recibirImpacto()>=barco.getVidas()) {
+            barco.recibirImpacto();
+            if (barco.estaHundido()) {
                 return estado.HUNDIDO;
             } else {
                 return estado.TOCADO;

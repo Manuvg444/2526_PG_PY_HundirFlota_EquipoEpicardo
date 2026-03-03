@@ -23,6 +23,7 @@ public class InformeDisparo {
                 estadosResultantes[i]=e;
             }
         }
+        numAfectados++;
     }
 
     public Coordenada[] getCoordenadasAfectadas() {
@@ -34,15 +35,19 @@ public class InformeDisparo {
     }
 
     public EstadoCasillaEnum getEstado(int index) {
-
+        return estadosResultantes[index];
     }
 
     public boolean esHundido() {
-
+        return hundido;
     }
 
     public void setEstado(boolean hundido) {
-        
+        this.hundido=hundido;
+    }
+
+    public int getNumAfectados() {
+        return numAfectados;
     }
 
 }
