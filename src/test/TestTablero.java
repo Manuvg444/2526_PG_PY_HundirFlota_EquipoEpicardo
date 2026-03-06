@@ -52,6 +52,7 @@ public class TestTablero {
         
         // Disparar en A1 y A3
         t.recibirAtaque(new Coordenada("A1"), TipoAtaqueEnum.DEFECTO);
+        System.out.println(t.celdas[0][0].getEstado());
         t.recibirAtaque(new Coordenada("A3"), TipoAtaqueEnum.DEFECTO);
         // Disparar al agua en B5
         t.recibirAtaque(new Coordenada("B5"), TipoAtaqueEnum.DEFECTO);

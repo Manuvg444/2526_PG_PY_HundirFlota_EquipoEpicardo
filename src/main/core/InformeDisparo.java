@@ -42,8 +42,8 @@ public class InformeDisparo {
         return hundido;
     }
 
-    public void setEstado(boolean hundido) {
-        this.hundido=hundido;
+    public void setHundido() {
+        this.hundido=true;
     }
 
     public int getNumAfectados() {

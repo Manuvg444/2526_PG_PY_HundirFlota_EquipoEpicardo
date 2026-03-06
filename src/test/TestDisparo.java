@@ -45,14 +45,17 @@ public class TestDisparo {
         System.out.println(">>> Test: Disparo a Barco");
         Tablero t = new Tablero();
         
-        // Colocamos un Submarino (3) en C5 vertical (C5, D5, E5)
+        // Colocamos un Submarino (3) en C5 vertical (C5, C6, C7)
         Barco sub = new Submarino(new BlindajeSimple());
         t.colocarBarco(sub, new Coordenada("C5"), DireccionEnum.SUR);
+        System.out.println(sub.getVidas());
         
         // Disparar en D5 (Barco)
-        InformeDisparo informe = t.recibirAtaque(new Coordenada("D5"), TipoAtaqueEnum.DEFECTO);
-        
+        InformeDisparo informe = t.recibirAtaque(new Coordenada("C6"), TipoAtaqueEnum.DEFECTO);
+        System.out.println(sub.getVidas());
+        System.out.println(informe.getEstado(0));
         assert informe.getEstado(0) == EstadoCasillaEnum.TOCADO;
+        System.out.println(sub.getVidas());   // ---- ERROR ---- Las vidas deberían ser 3, igual que el tamaño, pero es 1
         assert sub.getVidas() == 2; // Original 3 - 1
         
         // Disparar de nuevo al mismo sitio
