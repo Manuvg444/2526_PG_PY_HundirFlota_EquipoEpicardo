@@ -1,6 +1,10 @@
 package main.jugador;
 
+import java.util.Random;
+
 import main.core.Tablero;
+import main.localizacion.Coordenada;
+import main.localizacion.DireccionEnum;
 import main.nave.base.Barco;
 import main.nave.base.IBlindaje;
 import main.nave.defensa.BlindajeEvasivo;
@@ -19,8 +23,9 @@ public abstract class Jugador {
     protected Tablero miTablero;
     protected Tablero tableroRival;
     protected Barco[] flota;
+    protected boolean colocado;
 
-    public void Jugador(String nombre) {
+    public Jugador(String nombre) {
         this.nombre = nombre;
         this.miTablero = new Tablero();
         this.flota = new Barco[NUM_BARCOS];
@@ -28,6 +33,7 @@ public abstract class Jugador {
     }
 
     public void inicializarFlota() {
+
         flota[0] = new Acorazado(new BlindajeReforzado());
         flota[1] = new Buque(new BlindajeSimple());
         flota[2] = new Destructor(new BlindajeSimple());
@@ -36,6 +42,21 @@ public abstract class Jugador {
     }
 
     public void colocarTodaLaFlota() {
+        Random rnd = new Random();
+        for (Barco b : flota) {
+            boolean colocado = false;
+            int intentos = 0;
+            while (!colocado && intentos < 1000) {
+                int f = rnd.nextInt(Tablero.TAMAÑO);
+                int c = rnd.nextInt(Tablero.TAMAÑO);
+                DireccionEnum d = DireccionEnum.values()[rnd.nextInt(DireccionEnum.values().length)];
+                colocado = miTablero.colocarBarco(b, new Coordenada(f, c), d);
+                intentos++;
+            }
+            if (!colocado) {
+                System.err.println("Error: No se pudo colocar el barco " + b.getNombre() + " tras 1000 intentos.");
+            }
+        }
     }
 
     public void realizarTurno() {
@@ -44,7 +65,7 @@ public abstract class Jugador {
 
     public boolean tieneBarcosAFlote() {
         for (Barco b : flota) {
-            if (!b.estaHundido()) {
+            if (!b.estaHundido() && !b.getColocado()) {
                 return true;
             }
         }
