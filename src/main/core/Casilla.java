@@ -11,14 +11,15 @@ public class Casilla {
     }
 
     public boolean tieneBarco() {
-        if (barco!=null) {
-            return true;
+        if (this.barco==null) {
+            return false;
         }
-        return false;
+        return true;
     }
 
-    public void colocarBarco (Barco barco) {
+    public void colocarBarco(Barco barco) {
         this.barco = barco;
+        this.estado = EstadoCasillaEnum.BARCO;
     }
 
     public EstadoCasillaEnum recibirImpacto() {
@@ -30,12 +31,12 @@ public class Casilla {
                 return estado.TOCADO;
             }
         }
-        return estado.AGUA;
+        return estado.AGUA_DISPARADA;
     }
 
-    public EstadoCasillaEnum consultarEstadoRadar() {
+    // public EstadoCasillaEnum consultarEstadoRadar() {
         
-    }
+    // }
 
     public EstadoCasillaEnum getEstado() {
         return estado;

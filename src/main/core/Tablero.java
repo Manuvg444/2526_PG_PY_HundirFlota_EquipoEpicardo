@@ -14,7 +14,7 @@ import main.util.ConsoleHelper;
 public class Tablero implements IAtacable {
 
     public static final int TAMAÑO = 10;
-    private Casilla[][] celdas;
+    public Casilla[][] celdas;
 
     /**
      * Constructor: Inicializa la matriz de casillas.
@@ -52,6 +52,7 @@ public class Tablero implements IAtacable {
             case NORTE:
                 for (int i = 0; i < tamano; i++) {
                     if (esCoordenadaValida(col, fila-i)==false || celdas[col][fila-i].tieneBarco() || hayBarcoCerca(col, fila-i)) {
+                        System.out.println("Coordenada no válida");
                         return false;
                     }
                 }
@@ -59,6 +60,7 @@ public class Tablero implements IAtacable {
             case SUR:
                 for (int i = 0; i < tamano; i++) {
                     if (esCoordenadaValida(col, fila+i)==false || celdas[col][fila+i].tieneBarco() || hayBarcoCerca(col, fila+i)) {
+                        System.out.println("Coordenada no válida");
                         return false;
                     }
                 }
@@ -66,6 +68,7 @@ public class Tablero implements IAtacable {
             case ESTE:
                 for (int i = 0; i < tamano; i++) {
                     if (esCoordenadaValida(col+i, fila)==false || celdas[col+i][fila].tieneBarco() || hayBarcoCerca(col+i, fila)) {
+                        System.out.println("Coordenada no válida");
                         return false;
                     }
                 }
@@ -73,6 +76,7 @@ public class Tablero implements IAtacable {
             case OESTE:
                 for (int i = fila; i < tamano; i++) {
                     if (esCoordenadaValida(col-i, fila)==false || celdas[col-i][fila].tieneBarco() || hayBarcoCerca(col-i, fila)) {
+                        System.out.println("Coordenada no válida");
                         return false;
                     }
                 }
@@ -98,12 +102,12 @@ public class Tablero implements IAtacable {
                 break;
             case ESTE:
                 for (int i = 0; i < tamano; i++) {
-                    celdas[col+1][fila].colocarBarco(b);
+                    celdas[col+i][fila].colocarBarco(b);
                 }
                 break;
             case OESTE:
                 for (int i = fila; i < tamano; i++) {
-                    celdas[col-1][fila].colocarBarco(b);
+                    celdas[col-i][fila].colocarBarco(b);
                 }
                 break;
             default:
@@ -142,18 +146,50 @@ public class Tablero implements IAtacable {
             switch (arma) {
                 case DEFECTO:
                     informe.agregar(c, casilla.recibirImpacto());
-                    if (casilla.getBarco().estaHundido()) {
-                        
-                    }
+
                     break;
                 case R_AEREO:
-                    
+                    for (int co = col-1; co <= col+1; co++) {
+                        for (int fi = fila-1; fi <= fila+1; fi++) {
+                            if (esCoordenadaValida(co, fi)) {
+                                informe.agregar(new Coordenada(co, fi), casilla.getEstado());
+                            } 
+                        }       
+                    }   
                     break;
+
                 case A_CRUZ:
+                    for (int co = 0; co < TAMAÑO; co++) {
+                        informe.agregar(new Coordenada(co, fila), casilla.recibirImpacto());
+                    }
+                    for (int fi = 0; fi < TAMAÑO; fi++) {
+                        informe.agregar(new Coordenada(col, fi), casilla.recibirImpacto());
+                    }
+                    break;
+
+                case B_ZONA:
+                    if (esCoordenadaValida(col-1, fila)) {
+                        informe.agregar(new Coordenada(col-1, fila), casilla.recibirImpacto());
+                    }
+                    if (esCoordenadaValida(col+1, fila)) {
+                        informe.agregar(new Coordenada(col+1, fila), casilla.recibirImpacto());
+                    }
+                    if (esCoordenadaValida(col-1, fila-1)) {
+                        informe.agregar(new Coordenada(col, fila-1), casilla.recibirImpacto());
+                    }
+                    if (esCoordenadaValida(col-1, fila+1)) {
+                        informe.agregar(new Coordenada(col, fila+1), casilla.recibirImpacto());
+                    }
+                    break;
+
+                case D_DOBLE:
                     
                     break;
                 default:
                     break;
+            }
+            if (casilla.recibirImpacto()==EstadoCasillaEnum.HUNDIDO) {
+                informe.setHundido();
             }
         }
         
@@ -176,7 +212,7 @@ public class Tablero implements IAtacable {
         for (int f = 0; f < TAMAÑO; f++) {
             ConsoleHelper.writeColor(String.format("%2d ", f + 1), ConsoleHelper.CYAN);
             for (int c = 0; c < TAMAÑO; c++) {
-                EstadoCasillaEnum estado = celdas[f][c].getEstado();
+                EstadoCasillaEnum estado = celdas[c][f].getEstado();
                 String simbolo;
 
                 if (esModoRadar && estado == EstadoCasillaEnum.BARCO) {
@@ -209,8 +245,10 @@ public class Tablero implements IAtacable {
         // // Comprobar si la coordenada vecina es válida y si tiene un barco.
         for (int col = c-1; col <= c+1; col++) {
             for (int fila = f-1; fila <= f+1; fila++) {
-                if (esCoordenadaValida(c, f) && celdas[c][f].tieneBarco()) {
-                    return true;
+                if (esCoordenadaValida(col, fila)) {
+                    if (celdas[col][fila].tieneBarco()) {
+                        return true;
+                    }
                 }
             }
         }
