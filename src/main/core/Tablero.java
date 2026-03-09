@@ -147,15 +147,15 @@ public class Tablero implements IAtacable {
             switch (arma) {
                 case DEFECTO:
                 case D_DOBLE:
-                    // Cambiar a: informe = procesar()...
-                    informe.agregar(c, casilla.recibirImpacto());
+
+                    procesarImpacto(c, informe);
 
                     break;
                 case R_AEREO:
                     for (int co = col-1; co <= col+1; co++) {
                         for (int fi = fila-1; fi <= fila+1; fi++) {
                             if (esCoordenadaValida(co, fi)) {
-                                informe.agregar(new Coordenada(co, fi), casilla.getEstado());
+                                procesarImpacto(new Coordenada(co, fi), informe);
                             } 
                         }       
                     }   
@@ -163,25 +163,25 @@ public class Tablero implements IAtacable {
 
                 case A_CRUZ:
                     for (int co = 0; co < TAMAÑO; co++) {
-                        informe.agregar(new Coordenada(co, fila), casilla.recibirImpacto());
+                        procesarImpacto(new Coordenada(co, fila), informe);
                     }
                     for (int fi = 0; fi < TAMAÑO; fi++) {
-                        informe.agregar(new Coordenada(col, fi), casilla.recibirImpacto());
+                        procesarImpacto(new Coordenada(col, fi), informe);
                     }
                     break;
 
                 case B_ZONA:
                     if (esCoordenadaValida(col-1, fila)) {
-                        informe.agregar(new Coordenada(col-1, fila), casilla.recibirImpacto());
+                        procesarImpacto(new Coordenada(col-1, fila), informe);
                     }
                     if (esCoordenadaValida(col+1, fila)) {
-                        informe.agregar(new Coordenada(col+1, fila), casilla.recibirImpacto());
+                        procesarImpacto(new Coordenada(col+1, fila), informe);
                     }
                     if (esCoordenadaValida(col-1, fila-1)) {
-                        informe.agregar(new Coordenada(col, fila-1), casilla.recibirImpacto());
+                        procesarImpacto(new Coordenada(col, fila-1), informe);
                     }
                     if (esCoordenadaValida(col-1, fila+1)) {
-                        informe.agregar(new Coordenada(col, fila+1), casilla.recibirImpacto());
+                        procesarImpacto(new Coordenada(col, fila+1), informe);
                     }
                     break;
 
@@ -197,7 +197,7 @@ public class Tablero implements IAtacable {
     }
 
 
-    public InformeDisparo procesarImpacto(Coordenada c, InformeDisparo informe) {
+    public void procesarImpacto(Coordenada c, InformeDisparo informe) {
         int col = c.getColumna();
         int fila = c.getFila();
         Casilla casilla = celdas[col][fila];
@@ -219,12 +219,11 @@ public class Tablero implements IAtacable {
                     }
                 }
             }
-
-
+        } else {
+            informe.agregar(c, casilla.recibirImpacto());
         }
         
-        informe.agregar(c, casilla.recibirImpacto());
-        return informe;
+
     }
 
 
