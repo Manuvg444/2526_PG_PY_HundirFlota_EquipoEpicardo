@@ -1,94 +1,70 @@
 package main.jugador;
 
 import java.util.Scanner;
-
-import main.core.Casilla;
-import main.core.Tablero;
+import main.core.InformeDisparo;
 import main.localizacion.Coordenada;
+import main.localizacion.DireccionEnum;
 import main.nave.base.Barco;
-import main.nave.base.IBlindaje;
 import main.nave.base.TipoAtaqueEnum;
-import main.nave.tipos.Acorazado;
-import main.nave.tipos.Buque;
-import main.nave.tipos.Destructor;
-import main.nave.tipos.Portaaviones;
-import main.nave.tipos.Submarino;
-import main.nave.defensa.BlindajeEvasivo;
-import main.nave.defensa.BlindajeReforzado;
-import main.nave.defensa.BlindajeSimple;
 
 public class JugadorHumano extends Jugador {
 
     public JugadorHumano(String nombre) {
-        super("Jugador Humano");
+        super(nombre);
 
     }
 
-    // #region Barcos
-    Barco portaviones = new Portaaviones(new BlindajeSimple());
-    Barco buque = new Buque(new BlindajeSimple());
-    Barco destructor = new Destructor(new BlindajeSimple());
-    Barco acorazado = new Acorazado(new BlindajeReforzado());
-    Barco submarino = new Submarino(new BlindajeEvasivo());
-
-    Coordenada tarjet = null;
-    // #endregion
+    Scanner teclado = new Scanner(System.in);
 
     @Override
-    public void colocarTodaLaFlota() {
 
-        super.colocarTodaLaFlota();
+    public void colocarTodaLaFlota() {
+        System.out.println("Colocando barcos para " + nombre);
+
+        for (Barco b : flota) {
+            boolean colocado = false;
+
+            while (!colocado) {
+                System.out.println("Colocando: " + b);
+
+                System.out.print("Fila inicial: ");
+                int fila = teclado.nextInt();
+
+                System.out.print("Columna inicial: ");
+                int col = teclado.nextInt();
+
+                System.out.print("Dirección (NORTE/SUR/ESTE/OESTE): ");
+                String dir = teclado.next().toUpperCase();
+
+                Coordenada inicio = new Coordenada(col, fila);
+                DireccionEnum d = DireccionEnum.valueOf(dir);
+
+                colocado = miTablero.colocarBarco(b, inicio, d);
+
+                if (!colocado) {
+                    System.out.println("No se pudo colocar el barco. Intenta de nuevo.");
+                }
+
+            }
+
+        }
     }
 
     @Override
     public void realizarTurno() {
 
-        System.out.println("---TABLERO RIVAL---");
-        miTablero.imprimirTablero(false);
-        tableroRival.imprimirTablero(true);
+        System.out.println(nombre + ", elige dónde disparar.");
 
-        Scanner teclado = new Scanner(System.in);
+        System.out.print("Fila: ");
+        int fila = teclado.nextInt();
 
-        System.out.println("Turno del jugador humano, te toca");
-        System.out.println("---Seleccione una opción---");
-        System.out.println("1.Ataque Normal");
+        System.out.print("Columna: ");
+        int col = teclado.nextInt();
 
-        if (portaviones.tieneCargas() || buque.tieneCargas() || destructor.tieneCargas() || acorazado.tieneCargas()
-                || submarino.tieneCargas()) {
+        Coordenada objetivo = new Coordenada(col, fila);
 
-            System.out.println("2.Ataque Especial");
-            System.out.println("Las cargas restantes del portaviones son:" + portaviones.getCargasHabilidad());
-            System.out.println("Las cargas restantes del buque son:" + buque.getCargasHabilidad());
-            System.out.println("Las cargas restantes del destructor son:" + destructor.getCargasHabilidad());
-            System.out.println("Las cargas restantes del acorazado son:" + acorazado.getCargasHabilidad());
-            System.out.println("Las cargas restantes del submarino son:" + submarino.getCargasHabilidad());
+        InformeDisparo informe = tableroRival.recibirAtaque(objetivo, TipoAtaqueEnum.DEFECTO);
 
-        } else {
-
-            System.out.println("No se pueden realizar ataques especiales, !!!has agotado las cargas¡¡¡");
-        }
-
-        int opcion = teclado.nextInt();
-
-        switch (opcion) {
-            case 1:
-
-                System.out.println("¿A qué casilla quieres atacar");
-                tarjet = new Coordenada(teclado.nextLine());
-
-                tableroRival.recibirAtaque(tarjet, TipoAtaqueEnum.DEFECTO);
-
-                break;
-
-            case 2:
-
-                break;
-
-            default:
-                System.out.println("No has elegido ninguna opción");
-                break;
-        }
-
+        System.out.println("Disparo realizado. Celdas afectadas: " + informe.getCoordenadasAfectadas().length);
     }
-
 }
