@@ -23,8 +23,8 @@ public class Tablero implements IAtacable {
 
         celdas = new Casilla[TAMAÑO][TAMAÑO];
 
-        for (int col = 0; col < celdas.length; col++) {
-            for (int fila = 0; fila < celdas.length; fila++) {
+        for (int col = 0; col < TAMAÑO; col++) {
+            for (int fila = 0; fila < TAMAÑO; fila++) {
                 celdas[col][fila] = new Casilla();
             }
         }
@@ -46,7 +46,7 @@ public class Tablero implements IAtacable {
         // //    a) ¿Está dentro del tablero? (usar esCoordenadaValida)
         // //    b) ¿Hay ya otro barco en esa casilla?
         // //    c) ¿Hay barcos en las casillas adyacentes? (regla de no barcos pegados)
-        
+        // // 3. Si alguna comprobación falla, retornar false inmediatamente.
         
         switch (d) {
             case NORTE:
@@ -84,7 +84,6 @@ public class Tablero implements IAtacable {
             default:
                 break;
         }
-        // // 3. Si alguna comprobación falla, retornar false inmediatamente.
 
 
         // // 4. SEGUNDO BUCLE (Colocación): Si todo es válido, volver a recorrer y
@@ -117,6 +116,8 @@ public class Tablero implements IAtacable {
         return true;
     }
 
+
+
     /**
      * Procesa un ataque recibido en una coordenada con un arma específica.
      * 
@@ -145,6 +146,8 @@ public class Tablero implements IAtacable {
         if (esCoordenadaValida(col, fila)) {
             switch (arma) {
                 case DEFECTO:
+                case D_DOBLE:
+                    // Cambiar a: informe = procesar()...
                     informe.agregar(c, casilla.recibirImpacto());
 
                     break;
@@ -182,9 +185,6 @@ public class Tablero implements IAtacable {
                     }
                     break;
 
-                case D_DOBLE:
-                    
-                    break;
                 default:
                     break;
             }
@@ -193,10 +193,40 @@ public class Tablero implements IAtacable {
             }
         }
         
-
-
         return informe;
     }
+
+
+    public InformeDisparo procesarImpacto(Coordenada c, InformeDisparo informe) {
+        int col = c.getColumna();
+        int fila = c.getFila();
+        Casilla casilla = celdas[col][fila];
+        Barco b;
+
+        if (casilla.tieneBarco()) {
+            b = casilla.getBarco();
+
+            informe.agregar(c, casilla.recibirImpacto());
+
+            if (casilla.getEstado()==EstadoCasillaEnum.HUNDIDO) {
+                // Recorrer tablero y cambiar a hundido el resto de casillas de este barco.
+                for (int co = 0; co < TAMAÑO; co++) {
+                    for (int fi = 0; fi < TAMAÑO; fi++) {
+                        if (celdas[co][fi].getBarco().equals(b)) {
+                            casilla.setEstado(EstadoCasillaEnum.HUNDIDO);
+                            informe.agregar(new Coordenada(co, fi), casilla.getEstado());
+                        }
+                    }
+                }
+            }
+
+
+        }
+        
+        informe.agregar(c, casilla.recibirImpacto());
+        return informe;
+    }
+
 
     /**
      * Dibuja el tablero en la consola usando ConsoleHelper.
