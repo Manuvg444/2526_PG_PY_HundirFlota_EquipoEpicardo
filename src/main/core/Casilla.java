@@ -26,23 +26,33 @@ public class Casilla {
         if (tieneBarco()) {
             barco.recibirImpacto();
             if (barco.estaHundido()) {
+                this.estado=EstadoCasillaEnum.HUNDIDO;
                 return estado.HUNDIDO;
             } else {
+                this.estado=EstadoCasillaEnum.TOCADO;
                 return estado.TOCADO;
             }
         }
+        this.estado=EstadoCasillaEnum.AGUA_DISPARADA;
         return estado.AGUA_DISPARADA;
     }
 
-    // public EstadoCasillaEnum consultarEstadoRadar() {
-        
-    // }
+    public EstadoCasillaEnum consultarEstadoRadar() {
+        if (this.estado==EstadoCasillaEnum.BARCO) {
+            return EstadoCasillaEnum.AGUA;
+        }
+        return estado;
+    }
 
     public EstadoCasillaEnum getEstado() {
         return estado;
     }
     public Barco getBarco() {
         return barco;
+    }
+
+    public void setEstado(EstadoCasillaEnum estado) {
+        this.estado = estado;
     }
 }
 

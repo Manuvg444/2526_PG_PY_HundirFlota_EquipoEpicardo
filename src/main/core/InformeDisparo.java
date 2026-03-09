@@ -21,6 +21,7 @@ public class InformeDisparo {
             if (coordenadasAfectadas[i]==null) {
                 coordenadasAfectadas[i]=c;
                 estadosResultantes[i]=e;
+                break;
             }
         }
         numAfectados++;
