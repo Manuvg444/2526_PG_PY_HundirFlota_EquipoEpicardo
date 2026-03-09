@@ -6,7 +6,7 @@ import main.core.Tablero;
 import main.localizacion.Coordenada;
 import main.localizacion.DireccionEnum;
 import main.nave.base.Barco;
-import main.nave.base.IBlindaje;
+
 import main.nave.defensa.BlindajeEvasivo;
 import main.nave.defensa.BlindajeReforzado;
 import main.nave.defensa.BlindajeSimple;
@@ -23,7 +23,6 @@ public abstract class Jugador {
     protected Tablero miTablero;
     protected Tablero tableroRival;
     protected Barco[] flota;
-    protected boolean colocado;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
@@ -65,7 +64,7 @@ public abstract class Jugador {
 
     public boolean tieneBarcosAFlote() {
         for (Barco b : flota) {
-            if (!b.estaHundido() && !b.getColocado()) {
+            if (!b.estaHundido()) {
                 return true;
             }
         }

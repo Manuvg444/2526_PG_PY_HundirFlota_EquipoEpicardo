@@ -12,8 +12,8 @@ public class TestJugadores {
         System.out.println("=== TEST DE JUGADORES ===");
 
         testInicializacion();
-        // testRelacionRival();
-        // testEstadoFlota();
+        testRelacionRival();
+        testEstadoFlota();
 
         System.out.println("✅ Todas las pruebas de Jugadores superadas.");
     }
@@ -29,7 +29,7 @@ public class TestJugadores {
 
         // Assert
         assert j.getMiTablero() != null : "Error: El jugador debe tener su propio tablero";
-        assert !j.tieneBarcosAFlote()
+        assert j.tieneBarcosAFlote()
                 : "Error: Al inicio no debería tener barcos a flote hasta colocarlos (o según lógica de inicializar)";
         // Nota: Segun el codigo actual, inicializarFlota() crea las instancias en el
         // array but doesn't place them.
@@ -40,38 +40,37 @@ public class TestJugadores {
         System.out.println("  - Inicialización OK");
     }
 
-    // private static void testRelacionRival() {
-    // System.out.println(">>> Test: Relación con el Tablero Rival");
+    private static void testRelacionRival() {
+        System.out.println(">>> Test: Relación con el Tablero Rival");
 
-    // // Arrange
-    // Jugador j1 = new JugadorHumano("J1");
-    // Jugador j2 = new JugadorMaquina("Skynet");
+        // Arrange
+        Jugador j1 = new JugadorHumano("J1");
+        Jugador j2 = new JugadorMaquina("Skynet");
 
-    // // Act
-    // j1.setTableroRival(j2.getMiTablero());
+        // Act
+        j1.setTableroRival(j2.getMiTablero());
 
-    // // Assert
-    // assert j1.getTableroRival() == j2.getMiTablero() : "Error: El tablero rival
-    // de J1 debe ser el de Skynet";
+        // Assert
+        assert j1.getTableroRival() == j2.getMiTablero() : "Error: El tablero rival de J1 debe ser el de Skynet";
 
-    // System.out.println(" - Relación de rivalidad OK");
-    // }
+        System.out.println(" - Relación de rivalidad OK");
+    }
 
-    // private static void testEstadoFlota() {
-    // System.out.println(">>> Test: Estado de la Flota (hundido/vivo)");
+    private static void testEstadoFlota() {
+        System.out.println(">>> Test: Estado de la Flota (hundido/vivo)");
 
-    // // Arrange
-    // Jugador j = new JugadorHumano("J1");
-    // j.inicializarFlota();
+        // Arrange
+        Jugador j = new JugadorHumano("J1");
+        j.inicializarFlota();
 
-    // // Act & Assert
-    // assert j.tieneBarcosAFlote() : "Error: Inicialmente tiene barcos vivos";
+        // Act & Assert
+        assert j.tieneBarcosAFlote() : "Error: Inicialmente tiene barcos vivos";
 
-    // // Simulamos hundimiento de toda la flota (esto requiere acceso a los barcos
-    // de la flota)
-    // // Por simplicidad, comprobamos que si un barco está a flote, el método
-    // devuelve true.
+        // Simulamos hundimiento de toda la flota (esto requiere acceso a los barcosde
+        // la flota)
+        // Por simplicidad, comprobamos que si un barco está a flote, el método devuelve
+        // true.
 
-    // System.out.println(" - Consulta de flota OK");
-    // }
+        System.out.println(" - Consulta de flota OK");
+    }
 }

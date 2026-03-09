@@ -2,6 +2,11 @@ package main.app;
 
 import java.util.Scanner;
 
+import main.jugador.Jugador;
+import main.jugador.JugadorHumano;
+import main.jugador.JugadorMaquina;
+import main.localizacion.Coordenada;
+import main.nave.base.TipoAtaqueEnum;
 import main.util.ConsoleHelper;
 
 public class JuegoAlumno {
@@ -11,7 +16,7 @@ public class JuegoAlumno {
     public static void main(String[] args) {
         // Inicialización de la consola
         ConsoleHelper.init();
-        
+
         presentarBienvenida();
 
         // 1. Inicialización de jugadores
@@ -22,18 +27,18 @@ public class JuegoAlumno {
         configurarRivalidad(humano, maquina);
         prepararFlotas(humano, maquina);
 
-        // 3. Bucle principal de la partida
-        Jugador turnoActual = humano;
-        while (humano.tieneBarcosAFlote() && maquina.tieneBarcosAFlote()) {
-            
-            gestionarTurno(turnoActual, humano);
+        // // 3. Bucle principal de la partida
+        // Jugador turnoActual = humano;
+        // while (humano.tieneBarcosAFlote() && maquina.tieneBarcosAFlote()) {
 
-            // Alternancia de turno
-            turnoActual = (turnoActual == humano) ? maquina : humano;
-        }
+        // gestionarTurno(turnoActual, humano);
 
-        // 4. Finalización
-        finalizarPartida(humano);
+        // // Alternancia de turno
+        // turnoActual = (turnoActual == humano) ? maquina : humano;
+        // }
+
+        // // 4. Finalización
+        // finalizarPartida(humano);
     }
 
     /**
@@ -41,6 +46,13 @@ public class JuegoAlumno {
      */
     private static void presentarBienvenida() {
         // // TODO: Imprimir encabezado artístico con writeColorLn
+
+        ConsoleHelper.writeColorLn(" *************************************  ", ConsoleHelper.BG_PURPLE);
+        ConsoleHelper.writeColorLn("     🚢🚤⛵⛴️ *HUNDIR LA FLOTA*🚢🚤⛵⛴️  ", ConsoleHelper.BG_BLUE);
+        ConsoleHelper.writeColorLn(" *************************************  ", ConsoleHelper.BG_PURPLE);
+        ConsoleHelper.writeColorLn(" *¿PREPARADO PARA HUNDIR A TU OPONENTE?*", ConsoleHelper.BG_GREEN);
+        ConsoleHelper.writeColorLn(" *************************************  ", ConsoleHelper.BG_PURPLE);
+
     }
 
     /**
@@ -49,13 +61,26 @@ public class JuegoAlumno {
     private static void configurarRivalidad(Jugador p1, Jugador p2) {
         // // TODO: p1 debe conocer el tablero de p2 y viceversa.
         // // Usa los métodos setTableroRival() y getMiTablero().
+
+        // Act
+        p1.setTableroRival(p2.getMiTablero());
+
+        p2.setTableroRival(p1.getMiTablero());
+
     }
 
     /**
      * TODO: Inicializar y colocar los barcos en ambos jugadores.
      */
     private static void prepararFlotas(Jugador p1, Jugador p2) {
-        // // TODO: Llamar a inicializarFlota() y colocarTodaLaFlota() para cada jugador.
+        // // TODO: Llamar a inicializarFlota() y colocarTodaLaFlota() para cada
+        // jugador.
+
+        p1.inicializarFlota();
+        p2.inicializarFlota();
+
+        p1.colocarTodaLaFlota();
+        p2.colocarTodaLaFlota();
     }
 
     /**
@@ -70,7 +95,8 @@ public class JuegoAlumno {
     }
 
     /**
-     * TODO: Mostrar el radar enemigo (modo radar) y el tablero propio (modo normal).
+     * TODO: Mostrar el radar enemigo (modo radar) y el tablero propio (modo
+     * normal).
      */
     private static void visualizarEstadoParaHumano(Jugador h) {
         // // TODO: Usar h.getTableroRival().imprimirTablero(true)
@@ -81,7 +107,7 @@ public class JuegoAlumno {
      * TODO: Orquestar el disparo del humano: elegir habilidad y elegir coordenada.
      */
     private static void logicaEntradaHumano(Jugador h) {
-        // // TODO: 
+        // // TODO:
         // // 1. Obtener el TipoAtaque consultando al usuario.
         // // 2. Obtener una Coordenada válida.
         // // 3. Llamar a h.getTableroRival().recibirAtaque(coordenada, tipo)
@@ -89,24 +115,27 @@ public class JuegoAlumno {
     }
 
     /**
-     * TODO: Preguntar al usuario si desea usar habilidad especial y devolver el TipoAtaque.
+     * TODO: Preguntar al usuario si desea usar habilidad especial y devolver el
+     * TipoAtaque.
      */
-    private static TipoAtaque consultarUsoHabilidad() {
+    private static TipoAtaqueEnum consultarUsoHabilidad() {
         // // TODO: Leer del scanner si quiere usar habilidad.
-        // // Si dice sí: Mostrar opciones (1-4) y devolver el TipoAtaqueEnum correspondiente.
+        // // Si dice sí: Mostrar opciones (1-4) y devolver el TipoAtaqueEnum
+        // correspondiente.
         // // Si dice no: Devolver TipoAtaque.NORMAL.
-        return TipoAtaque.NORMAL; 
+        return TipoAtaqueEnum.DEFECTO;
     }
 
     /**
-     * TODO: Pedir una coordenada (ej: B5) y validarla contra errores (Scanner + Try/Catch).
+     * TODO: Pedir una coordenada (ej: B5) y validarla contra errores (Scanner +
+     * Try/Catch).
      */
     private static Coordenada capturarCoordenadaValida() {
         // // TODO: Bucle infinito (while true) que pida el string al usuario.
         // // Intentar crear una new Coordenada(input).
         // // Si falla (excepción), mostrar mensaje de error y seguir en el bucle.
         // // Si tiene éxito, retornar la coordenada.
-        return null; 
+        return null;
     }
 
     /**
@@ -116,3 +145,4 @@ public class JuegoAlumno {
         // // TODO: Comprobar humano.tieneBarcosAFlote() para saber si ganó o perdió.
         // // Usar ConsoleHelper para dar un acabado épico con colores.
     }
+}
