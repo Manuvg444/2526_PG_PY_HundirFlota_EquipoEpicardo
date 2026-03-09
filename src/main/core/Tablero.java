@@ -188,7 +188,7 @@ public class Tablero implements IAtacable {
                 default:
                     break;
             }
-            if (casilla.recibirImpacto()==EstadoCasillaEnum.HUNDIDO) {
+            if (casilla.getEstado()==EstadoCasillaEnum.HUNDIDO) {
                 informe.setHundido();
             }
         }
@@ -212,9 +212,11 @@ public class Tablero implements IAtacable {
                 // Recorrer tablero y cambiar a hundido el resto de casillas de este barco.
                 for (int co = 0; co < TAMAÑO; co++) {
                     for (int fi = 0; fi < TAMAÑO; fi++) {
-                        if (celdas[co][fi].getBarco().equals(b)) {
-                            casilla.setEstado(EstadoCasillaEnum.HUNDIDO);
-                            informe.agregar(new Coordenada(co, fi), casilla.getEstado());
+                        if (celdas[co][fi].tieneBarco()) {
+                            if (celdas[co][fi].getBarco().equals(b)) {
+                                casilla.setEstado(EstadoCasillaEnum.HUNDIDO);
+                                informe.agregar(new Coordenada(co, fi), casilla.getEstado());
+                            }
                         }
                     }
                 }
