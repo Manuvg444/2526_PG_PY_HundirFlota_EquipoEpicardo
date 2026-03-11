@@ -52,19 +52,81 @@ public class JugadorHumano extends Jugador {
 
     @Override
     public void realizarTurno() {
+        System.out.printf("\nTURNO DE %s\n", this.nombre);
 
-        System.out.println(nombre + ", elige dónde disparar.");
+        System.out.println("\nTU TABLERO:");
+        miTablero.imprimirTablero(false);
 
-        System.out.print("Fila: ");
-        int fila = teclado.nextInt();
+        System.out.println("\nTABLERO RIVAL:");
+        tableroRival.imprimirTablero(true);
 
-        System.out.print("Columna: ");
-        int col = teclado.nextInt();
+        // Mostrar menú
+        System.out.println("\nSelecciona acción:");
+        System.out.println("1. Disparo normal");
 
-        Coordenada objetivo = new Coordenada(col, fila);
+        Barco[] barcosCarga = getBarcosConCargas();
+        for (int i = 0; i < barcosCarga.length; i++) {
+            Barco b = barcosCarga[i];
+            System.out.println((i + 2) + ". Ataque especial del barco " + b.getNombre()
+                    + " || Tipo: " + b.getAtaqueEspecial()
+                    + " || Vidas: " + b.getVidas()
+                    + " || Cargas: " + b.getCargasHabilidad());
+        }
 
-        InformeDisparo informe = tableroRival.recibirAtaque(objetivo, TipoAtaqueEnum.DEFECTO);
+        // Pedir opción válida
+        int opcion = -1;
+        int maxOpcion = barcosCarga.length + 1;
 
-        System.out.println("Disparo realizado. Celdas afectadas: " + informe.getCoordenadasAfectadas().length);
+        do {
+            System.out.print("\nElige opción: ");
+            opcion = teclado.nextInt();
+        } while (opcion < 1 || opcion > maxOpcion);
+
+        // Pedir coordenada válida usando el método del tablero
+        int fila, col;
+        do {
+            System.out.print("\nFila: ");
+            fila = teclado.nextInt();
+
+            System.out.print("Columna: ");
+            col = teclado.nextInt();
+
+            if (!tableroRival.esCoordenadaValida(col, fila)) {
+                System.out.println("Coordenada no valida");
+            }
+
+        } while (!tableroRival.esCoordenadaValida(col, fila));
+
+        Coordenada objetivo = new Coordenada(fila, col);
+
+        InformeDisparo informe;
+
+        // Ejecutar acción
+        if (opcion == 1) {
+            // Disparo normal
+            informe = tableroRival.recibirAtaque(objetivo, TipoAtaqueEnum.DEFECTO);
+
+        } else {
+            // Ataque especial
+            Barco barcoElegido = barcosCarga[opcion - 2];
+
+            if (barcoElegido.getCargasHabilidad() <= 0) {
+                System.out.println("Ese barco no tiene cargas. Se realiza disparo normal.");
+                informe = tableroRival.recibirAtaque(objetivo, TipoAtaqueEnum.DEFECTO);
+            } else {
+                barcoElegido.usarCarga();
+                TipoAtaqueEnum ataque = barcoElegido.getAtaqueEspecial();
+                informe = tableroRival.recibirAtaque(objetivo, ataque);
+            }
+        }
+
+        // Mostrar resultado
+        System.out.println("\nDisparo realizado.");
+        System.out.println("Celdas afectadas: " + informe.getCoordenadasAfectadas().length);
+
+        if (informe.esHundido()) {
+            System.out.println("¡Has hundido un barco enemigo!");
+        }
     }
+
 }

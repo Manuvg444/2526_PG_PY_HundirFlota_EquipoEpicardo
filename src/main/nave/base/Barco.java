@@ -1,5 +1,8 @@
 package main.nave.base;
 
+import main.core.Tablero;
+import main.localizacion.Coordenada;
+
 public abstract class Barco {
 
     // #region Propiedades
@@ -19,6 +22,8 @@ public abstract class Barco {
         this.blindaje = blindaje;
         this.vidas = tamano;
     }
+
+    public abstract void activarHabilidadEspecial(Tablero tableroObjetivo, Coordenada coordenada);
 
     /*
      * public Barco(IBlindaje blindaje) {
@@ -74,10 +79,13 @@ public abstract class Barco {
         return this.vidas;
     }
 
+    public int getCargasHabilidad() {
+        return this.cargasHabilidad;
+    }
+
     public void setVidas(int vidas) {
         this.vidas = vidas;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -91,7 +99,7 @@ public abstract class Barco {
         if (nombre == null) {
             if (other.nombre != null)
                 return false;
-        } else if (this.nombre!=other.nombre)
+        } else if (this.nombre != other.nombre)
             return false;
         return true;
     }

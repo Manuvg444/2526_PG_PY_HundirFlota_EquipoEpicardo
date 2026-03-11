@@ -72,6 +72,27 @@ public abstract class Jugador {
 
     }
 
+    public Barco[] getBarcosConCargas() {
+        int barcosConCargas = 0;
+
+        for (Barco barco : flota) {
+            if (barco.getCargasHabilidad() > 0 && !barco.estaHundido()) {
+                barcosConCargas++;
+            }
+        }
+
+        Barco[] barcosCargas = new Barco[barcosConCargas];
+        int indiceArray = 0;
+        for (Barco barco : flota) {
+            if (barco.getCargasHabilidad() > 0 && !barco.estaHundido()) {
+                barcosCargas[indiceArray++] = barco;
+            }
+        }
+
+        return barcosCargas;
+
+    }
+
     public Tablero getMiTablero() {
         return miTablero;
     }

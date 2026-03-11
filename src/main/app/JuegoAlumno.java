@@ -28,14 +28,14 @@ public class JuegoAlumno {
         prepararFlotas(humano, maquina);
 
         // // 3. Bucle principal de la partida
-        // Jugador turnoActual = humano;
-        // while (humano.tieneBarcosAFlote() && maquina.tieneBarcosAFlote()) {
+        Jugador turnoActual = humano;
+        while (humano.tieneBarcosAFlote() && maquina.tieneBarcosAFlote()) {
 
-        // gestionarTurno(turnoActual, humano);
+            gestionarTurno(turnoActual, humano);
 
-        // // Alternancia de turno
-        // turnoActual = (turnoActual == humano) ? maquina : humano;
-        // }
+            // Alternancia de turno
+            turnoActual = (turnoActual == humano) ? maquina : humano;
+        }
 
         // // 4. Finalización
         // finalizarPartida(humano);
@@ -87,11 +87,13 @@ public class JuegoAlumno {
      * TODO: Decidir qué lógica ejecutar dependiendo de quién tiene el turno.
      */
     private static void gestionarTurno(Jugador actual, Jugador humanoReferencia) {
-        // // TODO: Si 'actual' es el humano:
-        // // 1. Visualizar estado (radar/propio)
-        // // 2. Ejecutar lógica de entrada para el disparo
-        // // Si es la máquina:
-        // // 1. Simplemente llamar a actual.realizarTurno()
+        // TODO: Si 'actual' es el humano:
+        // 1. Visualizar estado (radar/propio)
+        visualizarEstadoParaHumano(humanoReferencia);
+        // 2. Ejecutar lógica de entrada para el disparo
+        // Si es la máquina:
+        // 1. Simplemente llamar a actual.realizarTurno()
+        actual.realizarTurno();
     }
 
     /**
@@ -100,7 +102,9 @@ public class JuegoAlumno {
      */
     private static void visualizarEstadoParaHumano(Jugador h) {
         // // TODO: Usar h.getTableroRival().imprimirTablero(true)
+        h.getTableroRival().imprimirTablero(true);
         // // Usar h.getMiTablero().imprimirTablero(false)
+        h.getMiTablero().imprimirTablero(false);
     }
 
     /**
@@ -109,7 +113,13 @@ public class JuegoAlumno {
     private static void logicaEntradaHumano(Jugador h) {
         // // TODO:
         // // 1. Obtener el TipoAtaque consultando al usuario.
+
+        System.out.println("Que ataque quieres usar? (R_AEREO, A_CRUZ, INMERSION, B_ZONA, D_DOBLE, DEFECTO)");
+
+
+        
         // // 2. Obtener una Coordenada válida.
+
         // // 3. Llamar a h.getTableroRival().recibirAtaque(coordenada, tipo)
         // // 4. Informar por pantalla del resultado (hundido o no).
     }
