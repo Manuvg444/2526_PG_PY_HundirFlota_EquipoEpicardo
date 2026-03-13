@@ -79,7 +79,7 @@ public class Tablero implements IAtacable {
                 }
                 break;
             case OESTE:
-                for (int i = fila; i < tamano; i++) {
+                for (int i = 0; i < tamano; i++) {
                     if (esCoordenadaValida(col - i, fila) == false || celdas[col - i][fila].tieneBarco()
                             || hayBarcoCerca(col - i, fila)) {
                         System.out.println("Coordenada no válida");
@@ -110,7 +110,7 @@ public class Tablero implements IAtacable {
                 }
                 break;
             case OESTE:
-                for (int i = fila; i < tamano; i++) {
+                for (int i = 0; i < tamano; i++) {
                     celdas[col - i][fila].colocarBarco(b);
                 }
                 break;
