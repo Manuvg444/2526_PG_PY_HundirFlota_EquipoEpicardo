@@ -42,6 +42,8 @@ public class JugadorHumano extends Jugador {
 
                 colocado = miTablero.colocarBarco(b, inicio, d);
 
+                miTablero.imprimirTablero(false);
+
                 if (!colocado) {
                     System.out.println("No se pudo colocar el barco. Intenta de nuevo.");
                 }
