@@ -89,7 +89,7 @@ public class JugadorMaquina extends Jugador {
         }
 
         // 5. Mostrar resultado
-        System.out.println("Celdas afectadas: " + informe.getCoordenadasAfectadas().length);
+        System.out.println("Celdas afectadas: " + informe.getNumAfectados());
 
         if (informe.esHundido()) {
             System.out.println("La máquina ha hundido uno de tus barcos.");

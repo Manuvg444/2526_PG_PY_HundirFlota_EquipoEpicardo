@@ -25,13 +25,14 @@ public class JugadorHumano extends Jugador {
             boolean colocado = false;
 
             while (!colocado) {
-                System.out.println("Colocando: " + b);
+                System.out.println("Colocando: " + b.getNombre());
 
-                System.out.print("Fila inicial: ");
-                int fila = teclado.nextInt();
+                System.out.print("Introduce la coordenada: ");
+                Coordenada c = new Coordenada(teclado.next());
 
-                System.out.print("Columna inicial: ");
-                int col = teclado.nextInt();
+                int fila = c.getFila();
+
+                int col = c.getColumna();
 
                 System.out.print("Dirección (NORTE/SUR/ESTE/OESTE): ");
                 String dir = teclado.next().toUpperCase();
@@ -85,11 +86,12 @@ public class JugadorHumano extends Jugador {
         // Pedir coordenada válida usando el método del tablero
         int fila, col;
         do {
-            System.out.print("\nFila: ");
-            fila = teclado.nextInt();
+            System.out.print("Introduce la coordenada: ");
+            Coordenada c = new Coordenada(teclado.next());
 
-            System.out.print("Columna: ");
-            col = teclado.nextInt();
+            fila = c.getFila();
+
+            col = c.getColumna();
 
             if (!tableroRival.esCoordenadaValida(col, fila)) {
                 System.out.println("Coordenada no valida");
@@ -122,7 +124,7 @@ public class JugadorHumano extends Jugador {
 
         // Mostrar resultado
         System.out.println("\nDisparo realizado.");
-        System.out.println("Celdas afectadas: " + informe.getCoordenadasAfectadas().length);
+        System.out.println("Celdas afectadas: " + informe.getNumAfectados());
 
         if (informe.esHundido()) {
             System.out.println("¡Has hundido un barco enemigo!");

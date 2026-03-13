@@ -27,14 +27,14 @@ public class Casilla {
             barco.recibirImpacto();
             if (barco.estaHundido()) {
                 this.estado=EstadoCasillaEnum.HUNDIDO;
-                return estado.HUNDIDO;
+                return this.estado;
             } else {
                 this.estado=EstadoCasillaEnum.TOCADO;
-                return estado.TOCADO;
+                return this.estado;
             }
         }
         this.estado=EstadoCasillaEnum.AGUA_DISPARADA;
-        return estado.AGUA_DISPARADA;
+        return this.estado;
     }
 
     public EstadoCasillaEnum consultarEstadoRadar() {
