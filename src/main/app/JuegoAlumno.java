@@ -6,6 +6,7 @@ import main.jugador.Jugador;
 import main.jugador.JugadorHumano;
 import main.jugador.JugadorMaquina;
 import main.localizacion.Coordenada;
+import main.nave.base.Barco;
 import main.nave.base.TipoAtaqueEnum;
 import main.util.ConsoleHelper;
 
@@ -38,7 +39,7 @@ public class JuegoAlumno {
         }
 
         // // 4. Finalización
-        // finalizarPartida(humano);
+        finalizarPartida(humano);
     }
 
     /**
@@ -87,12 +88,7 @@ public class JuegoAlumno {
      * TODO: Decidir qué lógica ejecutar dependiendo de quién tiene el turno.
      */
     private static void gestionarTurno(Jugador actual, Jugador humanoReferencia) {
-        // TODO: Si 'actual' es el humano:
-        // 1. Visualizar estado (radar/propio)
-        visualizarEstadoParaHumano(humanoReferencia);
-        // 2. Ejecutar lógica de entrada para el disparo
-        // Si es la máquina:
-        // 1. Simplemente llamar a actual.realizarTurno()
+
         actual.realizarTurno();
     }
 
@@ -100,59 +96,80 @@ public class JuegoAlumno {
      * TODO: Mostrar el radar enemigo (modo radar) y el tablero propio (modo
      * normal).
      */
-    private static void visualizarEstadoParaHumano(Jugador h) {
-        // // TODO: Usar h.getTableroRival().imprimirTablero(true)
-        h.getTableroRival().imprimirTablero(true);
-        // // Usar h.getMiTablero().imprimirTablero(false)
-        h.getMiTablero().imprimirTablero(false);
-    }
+    // private static void visualizarEstadoParaHumano(Jugador h) {
+    // // // TODO: Usar h.getTableroRival().imprimirTablero(true)
+    // h.getTableroRival().imprimirTablero(true);
+    // // // Usar h.getMiTablero().imprimirTablero(false)
+    // h.getMiTablero().imprimirTablero(false);
+    // }
 
     /**
      * TODO: Orquestar el disparo del humano: elegir habilidad y elegir coordenada.
      */
-    private static void logicaEntradaHumano(Jugador h) {
-        // // TODO:
-        // // 1. Obtener el TipoAtaque consultando al usuario.
-
-        System.out.println("Que ataque quieres usar? (R_AEREO, A_CRUZ, INMERSION, B_ZONA, D_DOBLE, DEFECTO)");
-
-
-        
-        // // 2. Obtener una Coordenada válida.
-
-        // // 3. Llamar a h.getTableroRival().recibirAtaque(coordenada, tipo)
-        // // 4. Informar por pantalla del resultado (hundido o no).
-    }
+    // private static void logicaEntradaHumano(Jugador h) {
+    // // // TODO:
+    // // // 1. Obtener el TipoAtaque consultando al usuario.
+    // // // 2. Obtener una Coordenada válida.
+    // // // 3. Llamar a h.getTableroRival().recibirAtaque(coordenada, tipo)
+    // // // 4. Informar por pantalla del resultado (hundido o no).
+    // }
 
     /**
      * TODO: Preguntar al usuario si desea usar habilidad especial y devolver el
      * TipoAtaque.
      */
-    private static TipoAtaqueEnum consultarUsoHabilidad() {
-        // // TODO: Leer del scanner si quiere usar habilidad.
-        // // Si dice sí: Mostrar opciones (1-4) y devolver el TipoAtaqueEnum
-        // correspondiente.
-        // // Si dice no: Devolver TipoAtaque.NORMAL.
-        return TipoAtaqueEnum.DEFECTO;
-    }
+    // private static TipoAtaqueEnum consultarUsoHabilidad() {
+    // // // TODO: Leer del scanner si quiere usar habilidad.
+    // // // Si dice sí: Mostrar opciones (1-4) y devolver el TipoAtaqueEnum
+    // // correspondiente.
+    // // // Si dice no: Devolver TipoAtaque.NORMAL.
+    // return TipoAtaqueEnum.DEFECTO;
+    // }
 
     /**
      * TODO: Pedir una coordenada (ej: B5) y validarla contra errores (Scanner +
      * Try/Catch).
      */
-    private static Coordenada capturarCoordenadaValida() {
-        // // TODO: Bucle infinito (while true) que pida el string al usuario.
-        // // Intentar crear una new Coordenada(input).
-        // // Si falla (excepción), mostrar mensaje de error y seguir en el bucle.
-        // // Si tiene éxito, retornar la coordenada.
-        return null;
-    }
+    // private static Coordenada capturarCoordenadaValida() {
+    // // // TODO: Bucle infinito (while true) que pida el string al usuario.
+    // // // Intentar crear una new Coordenada(input).
+    // // // Si falla (excepción), mostrar mensaje de error y seguir en el bucle.
+    // // // Si tiene éxito, retornar la coordenada.
+    // return null;
+    // }
 
     /**
      * TODO: Mostrar mensaje de victoria o derrota final.
      */
     private static void finalizarPartida(Jugador humano) {
         // // TODO: Comprobar humano.tieneBarcosAFlote() para saber si ganó o perdió.
-        // // Usar ConsoleHelper para dar un acabado épico con colores.
+        if (!humano.tieneBarcosAFlote()) {
+            System.out.println("           !!!! HAS GANADO ¡¡¡¡          ");
+            System.out.println("               🏆               ");
+            ConsoleHelper.writeColorLn("                                ", ConsoleHelper.BG_YELLOW);
+            ConsoleHelper.writeColorLn("                                  ", ConsoleHelper.BG_YELLOW);
+            ConsoleHelper.writeColorLn("                                    ", ConsoleHelper.BG_YELLOW);
+            ConsoleHelper.writeColorLn("                                      ", ConsoleHelper.BG_YELLOW);
+            ConsoleHelper.writeColorLn("                                        ", ConsoleHelper.BG_YELLOW);
+
+        } else {
+
+            ConsoleHelper.writeColorLn(
+                    "|   |    ------    |      |          |           -------    --------    ---------  ",
+                    ConsoleHelper.BG_RED);
+            ConsoleHelper.writeColorLn(
+                    "|   |   |      |   |      |          |          |       |  |                |       ",
+                    ConsoleHelper.BG_RED);
+            ConsoleHelper.writeColorLn(
+                    "\\  /   |      |   |      |          |          |       |   -------         |       ",
+                    ConsoleHelper.BG_RED);
+            ConsoleHelper.writeColorLn(
+                    "  |     |      |   |      |          |          |       |          |        |       ",
+                    ConsoleHelper.BG_RED);
+            ConsoleHelper.writeColorLn(
+                    "  |      ------     ------            -------    -------   --------         |      ",
+                    ConsoleHelper.BG_RED);
+
+        }
     }
 }
