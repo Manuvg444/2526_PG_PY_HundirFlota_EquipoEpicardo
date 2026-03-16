@@ -26,15 +26,33 @@ public class JugadorHumano extends Jugador {
             while (!colocado) {
                 System.out.println("Colocando: " + b.getNombre());
 
-                System.out.print("Introduce la coordenada: ");
-                Coordenada c = new Coordenada(teclado.next());
+                Coordenada c;
+                do {
+                    System.out.print("Introduce la coordenada: ");
+                    String entrada=teclado.next();
+                    if (Coordenada.esValida(entrada)) {
+                        c = new Coordenada(entrada);
+                        break;
+                    }
+                    System.out.println("Coordenada mal introducida, vuelve a introducirla");
+                } while (true);
 
                 int fila = c.getFila();
 
                 int col = c.getColumna();
 
-                System.out.print("Dirección (NORTE/SUR/ESTE/OESTE): ");
-                String dir = teclado.next().toUpperCase();
+
+                String dir;
+                do {
+                    System.out.print("Dirección (NORTE/SUR/ESTE/OESTE): ");
+                    dir = teclado.next().toUpperCase();
+                    if (dir.equals("NORTE") || dir.equals("SUR") || dir.equals("ESTE") || dir.equals("OESTE")) {
+                        break;
+                    }
+                    System.out.println("Dirección mal introducida, vuelve a introducirla");
+                } while (true);
+              
+
 
                 Coordenada inicio = new Coordenada(col, fila);
                 DireccionEnum d = DireccionEnum.valueOf(dir);
@@ -78,11 +96,20 @@ public class JugadorHumano extends Jugador {
         // Pedir opción válida
         int opcion = -1;
         int maxOpcion = barcosCarga.length + 1;
-
+        boolean opcionValida;
         do {
             System.out.print("\nElige opción: ");
-            opcion = teclado.nextInt();
-        } while (opcion < 1 || opcion > maxOpcion);
+            String entrada = teclado.next();
+            
+                try {
+                    Integer.parseInt(entrada);
+                    opcionValida=true;
+                    opcion=Integer.parseInt(entrada);
+                } catch (NumberFormatException e) {
+                    System.out.println("Opción introducida incorrectamente");
+                    opcionValida=false;
+                }
+        } while (opcion < 1 || opcion > maxOpcion || !opcionValida);
 
 
 

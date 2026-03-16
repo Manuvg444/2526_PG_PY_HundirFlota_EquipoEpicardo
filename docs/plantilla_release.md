@@ -34,9 +34,9 @@ Indica con una `X` las funcionalidades que habéis implementado correctamente:
 
 - [x] **UC4.1 - Portaaviones**: Reconocimiento aéreo (Radar 3x3).
 - [x] **UC4.2 - Buque**: Ataque en cruz (Fila y Columna completa).
-- [ ] **UC4.3 - Submarino**: Inmersión (Invulnerabilidad temporal).
+- [x] **UC4.3 - Submarino**: Inmersión (Invulnerabilidad temporal).
 - [x] **UC4.4 - Acorazado**: Bombardeo en zona.
-- [ ] **UC4.5 - Destructor**: Disparo doble.
+- [x] **UC4.5 - Destructor**: Disparo doble.
 
 ### 🤖 5. Jugadores e IA
 
