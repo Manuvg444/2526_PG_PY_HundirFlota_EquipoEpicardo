@@ -24,12 +24,17 @@ public abstract class Jugador {
     protected Tablero tableroRival;
     protected Barco[] flota;
 
+    // EN EL CONSTRUCTOR A LA FLOTA SE LE PONE COMO LONGITUD NUM_BARCOS ==>
+
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.miTablero = new Tablero();
         this.flota = new Barco[NUM_BARCOS];
 
     }
+
+    // SE INICIALIZA LA FLOTA Y SE CREAN TODOS LOS BARCOS, SE LES ASIGNA UNA
+    // POSICIÓN DE FLOTA ==>
 
     public void inicializarFlota() {
 
@@ -39,6 +44,8 @@ public abstract class Jugador {
         flota[3] = new Portaaviones(new BlindajeEvasivo());
         flota[4] = new Submarino(new BlindajeEvasivo());
     }
+
+    // SE COLOCA TODA LA FLOTA AUTOMÁTICAMENTE (SOLO PARA MÁQUINA)
 
     public void colocarTodaLaFlota() {
         Random rnd = new Random();
@@ -58,9 +65,14 @@ public abstract class Jugador {
         }
     }
 
+    // CADA JUGADOR SOBREESCRIBE SU MÉTODO REALIZARTURNO ==>
+
     public void realizarTurno() {
 
     }
+
+    // MIENTRAS TENGA BARCOS CON VIDAS, TIENE BARCOS A FLOTE, SI NO, RETORNA FALSO
+    // ==>
 
     public boolean tieneBarcosAFlote() {
         for (Barco b : flota) {
@@ -71,6 +83,9 @@ public abstract class Jugador {
         return false;
 
     }
+
+    // MIENTRAS TENGA CARGAS Y NO ESTÁ HUNDIDO, EL CONTADOR DE BARCOS CON CARGA SUBE
+    // LUEGO SE HACE UN ARRAY DE BARCOS CON EL CONTADOR
 
     public Barco[] getBarcosConCargas() {
         int barcosConCargas = 0;
