@@ -7,6 +7,7 @@ public class Coordenada {
 
     public Coordenada(String entrada) {
     // 1. Extraer la letra (0) y el número (desde 1 hasta el final)
+    // Esto separa la coordenada introducida (ej: "C3") en: "letra" (la letra o columna) , y "resto" (el número o fila)
     char letra = entrada.toUpperCase().charAt(0);
     String resto = entrada.substring(1);
     
@@ -22,6 +23,7 @@ public class Coordenada {
     this.columna = new Columna(colIndex);
     }
 
+    // Este es otro constructor para coordenada, que recibe directamente columna y fila:
     public Coordenada (int numColumna, int numFila) {
         this.columna = new Columna(numColumna);
         this.fila=new Fila(numFila);

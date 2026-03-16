@@ -11,7 +11,6 @@ public class JugadorHumano extends Jugador {
 
     public JugadorHumano(String nombre) {
         super(nombre);
-
     }
 
     Scanner teclado = new Scanner(System.in);
@@ -84,6 +83,116 @@ public class JugadorHumano extends Jugador {
             System.out.print("\nElige opción: ");
             opcion = teclado.nextInt();
         } while (opcion < 1 || opcion > maxOpcion);
+
+
+
+        
+        if (opcion==4) {            // Si es doble disparo:
+            dobleDisparo();
+            flota[2].usarCarga();
+        } else if (opcion==6) {     // Si es inmersión:
+            flota[4].setInmerso();
+            flota[4].usarCarga();
+        } else {
+
+
+            // Pedir coordenada válida usando el método del tablero
+            int fila, col;
+            do {
+                System.out.print("Introduce la coordenada: ");
+                Coordenada c = new Coordenada(teclado.next());
+
+                fila = c.getFila();
+
+                col = c.getColumna();
+
+                if (!tableroRival.esCoordenadaValida(col, fila)) {
+                    System.out.println("Coordenada no valida");
+                }
+
+            } while (!tableroRival.esCoordenadaValida(col, fila));
+
+            Coordenada objetivo = new Coordenada(col, fila);
+
+            InformeDisparo informe;
+
+            // Ejecutar acción
+            if (opcion == 1) {
+                // Disparo normal
+                informe = tableroRival.recibirAtaque(objetivo, TipoAtaqueEnum.DEFECTO);
+
+            } else {
+                // Ataque especial
+                Barco barcoElegido = barcosCarga[opcion - 2];
+
+                if (barcoElegido.getCargasHabilidad() <= 0) {
+                    System.out.println("Ese barco no tiene cargas. Se realiza disparo normal.");
+                    informe = tableroRival.recibirAtaque(objetivo, TipoAtaqueEnum.DEFECTO);
+                } else {
+                    barcoElegido.usarCarga();
+                    TipoAtaqueEnum ataque = barcoElegido.getAtaqueEspecial();
+                    informe = tableroRival.recibirAtaque(objetivo, ataque);
+                }
+            }
+
+            // Mostrar resultado
+            System.out.println("\nDisparo realizado.");
+            System.out.println("Celdas afectadas: " + informe.getNumAfectados());
+
+            if (informe.esHundido()) {
+                System.out.println("¡Has hundido un barco enemigo!");
+            }
+        }
+    }
+
+
+
+    private void dobleDisparo() {
+        // Primer disparo:
+        disparo();
+        
+        //Segundo disparo:
+        disparo();
+    }
+
+
+
+
+
+
+
+    private void disparo() {
+        System.out.println("\nTU TABLERO:");
+        miTablero.imprimirTablero(false);
+
+        System.out.println("\nTABLERO RIVAL:");
+        tableroRival.imprimirTablero(true);
+
+        // Mostrar menú
+        System.out.println("\nSelecciona acción:");
+        System.out.println("1. Disparo normal");
+
+        Barco[] barcosCarga = getBarcosConCargas();
+        for (int i = 0; i < barcosCarga.length; i++) {
+            Barco b = barcosCarga[i];
+            System.out.println((i + 2) + ". Ataque especial del barco " + b.getNombre()
+                    + " || Tipo: " + b.getAtaqueEspecial()
+                    + " || Vidas: " + b.getVidas()
+                    + " || Cargas: " + b.getCargasHabilidad());
+        }
+
+        // Pedir opción válida
+        int opcion = -1;
+        int maxOpcion = barcosCarga.length + 1;
+
+        do {
+            System.out.print("\nElige opción: ");
+            opcion = teclado.nextInt();
+            if (opcion==4) {
+            System.out.println("No puedes volver a elegir doble disparo todavía");
+            }
+        } while (opcion < 1 || opcion > maxOpcion || opcion==4);
+
 
         // Pedir coordenada válida usando el método del tablero
         int fila, col;
