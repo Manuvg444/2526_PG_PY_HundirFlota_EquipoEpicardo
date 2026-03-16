@@ -3,6 +3,8 @@ package main.nave.base;
 import main.core.Tablero;
 import main.localizacion.Coordenada;
 
+//RECUERDA BARCO ES UNA CLASE ABSTRACTA
+
 public abstract class Barco {
 
     // #region Propiedades
@@ -16,14 +18,20 @@ public abstract class Barco {
 
     // #endregion
 
+    // ESTE ES EL CONSTRUCTOR PRINCIPAL AL QUE HACE REFERENCIA EL CONSTRUCTOR
+    // IBLINDAJE ==>
+
     public Barco(String nombre, int tamano, int cargasHabilidad, IBlindaje blindaje) {
         this.nombre = nombre;
         this.tamano = tamano;
         this.cargasHabilidad = cargasHabilidad;
         this.blindaje = blindaje;
         this.vidas = tamano;
-        this.estaInmerso=false;
+        this.estaInmerso = false;
     }
+
+    // RECUERDA, ES UN MÉTODO ABSTRACT, POR LO QUE SON LAS CLASES HIJAS LAS QUE
+    // DEFINEN EL MÉTODO ==>
 
     public abstract void activarHabilidadEspecial(Tablero tableroObjetivo, Coordenada coordenada);
 
@@ -33,6 +41,11 @@ public abstract class Barco {
      * }
      */
 
+    // MÉTODO RECIBIR IMPACTO, EL DAÑO BASE ES 1, Y EL DAÑO FINAL ES EL BLINDAJE
+    // TRAS RECIBIR EL IMPACTO
+    // ESE OTRO MÉTODO DE RECIBIR IMPACTO VIENE DE LA INTERFAZ IBLINDAJE PARA QUE
+    // LOS BLINDAJES LO PUEDAN UTILIZAR ==>
+
     public int recibirImpacto() {
         int danioBase = 1;
         int danioFinal = blindaje.recibirImpacto(danioBase);
@@ -40,6 +53,9 @@ public abstract class Barco {
         return danioFinal;
 
     }
+
+    // RETORNA FALSE SI THIS.VIDAS SON MAYOR QUE 0, Y RETORNA TRUE SI YA NO LE
+    // QUEDAN VIDAS ==>
 
     public boolean estaHundido() {
         if (this.vidas > 0)
@@ -49,6 +65,9 @@ public abstract class Barco {
 
     }
 
+    // ESTE MÉTODO QUITA UNA CARGA POR TURNO, SI TIENE MÁS DE 0, LE QUITA UNA CARGA,
+    // SI NO TIENE CARGAS, SE QUEDA EN 0.
+
     public int usarCarga() {
         if (this.cargasHabilidad > 0) {
             return this.cargasHabilidad = this.cargasHabilidad - 1;
@@ -57,12 +76,16 @@ public abstract class Barco {
         }
     }
 
+    // EL BARCO TIENE CARGAS MIENTRAS LAS CARGAS SEAN MAYOR A 0
+
     public boolean tieneCargas() {
         if (this.cargasHabilidad > 0)
             return true;
         else
             return false;
     }
+
+    // ESTE MÉTODO ES SOBREESCRITO EN CADA BARCO, ESTO ES POR DEFECTO
 
     public TipoAtaqueEnum getAtaqueEspecial() {
         return TipoAtaqueEnum.DEFECTO;
@@ -90,11 +113,11 @@ public abstract class Barco {
     }
 
     public void setInmerso() {
-        this.estaInmerso=true;
+        this.estaInmerso = true;
     }
 
     public void quitarInmerso() {
-        this.estaInmerso=false;
+        this.estaInmerso = false;
     }
 
     public boolean estaInmerso() {
