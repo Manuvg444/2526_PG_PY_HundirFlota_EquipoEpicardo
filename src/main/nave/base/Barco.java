@@ -14,7 +14,6 @@ public abstract class Barco {
     private int vidas;
     private int cargasHabilidad;
     private IBlindaje blindaje;
-    public boolean estaInmerso;
 
     // #endregion
 
@@ -27,7 +26,6 @@ public abstract class Barco {
         this.cargasHabilidad = cargasHabilidad;
         this.blindaje = blindaje;
         this.vidas = tamano;
-        this.estaInmerso = false;
     }
 
     // RECUERDA, ES UN MÉTODO ABSTRACT, POR LO QUE SON LAS CLASES HIJAS LAS QUE
@@ -112,17 +110,6 @@ public abstract class Barco {
         this.vidas = vidas;
     }
 
-    public void setInmerso() {
-        this.estaInmerso = true;
-    }
-
-    public void quitarInmerso() {
-        this.estaInmerso = false;
-    }
-
-    public boolean estaInmerso() {
-        return this.estaInmerso;
-    }
 
     @Override
     public boolean equals(Object obj) {

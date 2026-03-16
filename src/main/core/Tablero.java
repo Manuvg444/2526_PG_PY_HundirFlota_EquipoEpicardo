@@ -212,22 +212,16 @@ public class Tablero implements IAtacable {
         if (casilla.tieneBarco()) {
             b = casilla.getBarco();
 
-            if (b.estaInmerso()) {
-                System.out.println("El submarino atacado estaba inmerso, no hiciste daño");
-                b.quitarInmerso();
-            } else {
+            informe.agregar(c, casilla.recibirImpacto());
 
-                informe.agregar(c, casilla.recibirImpacto());
-
-                if (casilla.getEstado() == EstadoCasillaEnum.HUNDIDO) {
-                    // Recorrer tablero y cambiar a hundido el resto de casillas de este barco.
-                    for (int co = 0; co < TAMAÑO; co++) {
-                        for (int fi = 0; fi < TAMAÑO; fi++) {
-                            if (celdas[co][fi].tieneBarco()) {
-                                if (celdas[co][fi].getBarco().equals(b)) {
-                                    casilla.setEstado(EstadoCasillaEnum.HUNDIDO);
-                                    informe.agregar(new Coordenada(co, fi), casilla.getEstado());
-                                }
+            if (casilla.getEstado() == EstadoCasillaEnum.HUNDIDO) {
+                // Recorrer tablero y cambiar a hundido el resto de casillas de este barco.
+                for (int co = 0; co < TAMAÑO; co++) {
+                    for (int fi = 0; fi < TAMAÑO; fi++) {
+                        if (celdas[co][fi].tieneBarco()) {
+                            if (celdas[co][fi].getBarco().equals(b)) {
+                                casilla.setEstado(EstadoCasillaEnum.HUNDIDO);
+                                informe.agregar(new Coordenada(co, fi), casilla.getEstado());
                             }
                         }
                     }
@@ -236,17 +230,6 @@ public class Tablero implements IAtacable {
 
         } else {
             informe.agregar(c, casilla.recibirImpacto());
-
-            // Buscar el barco que esté inmerso para quitarle el estado de inmerso:
-            for (int co = 0; co < TAMAÑO; co++) {
-                for (int fi = 0; fi < TAMAÑO; fi++) {
-                    if (celdas[co][fi].tieneBarco()) {
-                        if (celdas[co][fi].getBarco().estaInmerso()) {
-                            celdas[co][fi].getBarco().quitarInmerso();
-                        }
-                    }
-                }
-            }
         }
         
 
