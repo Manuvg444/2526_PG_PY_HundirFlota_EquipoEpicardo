@@ -33,7 +33,7 @@ public class Coordenada {
         this.fila=new Fila(numFila);
     }
 
-
+    // Esto comprueba que la entrada (String) introducida tiene formato de coordenada (letra-numero)
     public static boolean esValida(String entrada) {
         // Comprobar longitud mínima (1 letra y 1 numero)
         if (entrada == null || entrada.length() < 2) {

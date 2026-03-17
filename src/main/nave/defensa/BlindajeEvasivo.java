@@ -20,6 +20,7 @@ public class BlindajeEvasivo implements IBlindaje {
 
     @Override
     public int recibirImpacto(int danioEntrante) {
+        prob = rnd.nextDouble();
         if (prob < 0.20) {
             return danioEntrante = 0;
         } else {
